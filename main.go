@@ -8,9 +8,14 @@ import (
 )
 
 func main() {
+	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/crawl", crawlHandler)
 	fmt.Println("Server is running on :8080...")
 	http.ListenAndServe(":8080", nil)
+}
+
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "index.html")
 }
 
 func crawlHandler(w http.ResponseWriter, r *http.Request) {

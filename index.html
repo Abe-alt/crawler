@@ -3,51 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Crawler Frontend</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-        }
-
-        button {
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        #result {
-            margin-top: 20px;
-        }
-    </style>
+    <title>Web Crawler</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h2>Web Crawler</h2>
-<form id="crawlerForm">
-    <label for="websiteUrl">Website URL:</label>
-    <input type="text" id="websiteUrl" name="websiteUrl" required>
-    <button type="button" onclick="startCrawling()">Start Crawling</button>
-</form>
+<div class="container">
+    <h2>Web Crawler Results</h2>
+    <form id="crawlerForm">
+        <label for="websiteUrl">Website URL:</label>
+        <input type="text" id="websiteUrl" name="websiteUrl" required>
+        <button type="button" onclick="startCrawling()">Start Crawling</button>
+    </form>
 
-<div id="result"></div>
+    <div id="result"></div>
+</div>
 
 <script>
     async function startCrawling() {
@@ -69,11 +38,11 @@
         resultDiv.innerHTML = '';
 
         if (result.error) {
-            resultDiv.innerHTML = `<p style="color: red;">Error: ${result.error}</p>`;
+            resultDiv.innerHTML = `<p class="error">Error: ${result.error}</p>`;
         } else {
             resultDiv.innerHTML = '<h3>Crawling Result:</h3>';
-            for (const page of Object.entries(result)) {
-                resultDiv.innerHTML += `<p>${page}</p>`;
+            for (const [page, count] of Object.entries(result)) {
+                resultDiv.innerHTML += `<p>${page}: ${count} links</p>`;
             }
         }
     }
