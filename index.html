@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Crawler Frontend</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h2>Web Crawler</h2>
+<form id="crawlerForm">
+    <label for="websiteUrl">Website URL:</label>
+    <input type="text" id="websiteUrl" name="websiteUrl" required>
+    <button type="button" onclick="startCrawling()">Start Crawling</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+    async function startCrawling() {
+        const websiteUrl = document.getElementById('websiteUrl').value;
+
+        try {
+            const response = await fetch(`/crawl?websiteUrl=${encodeURIComponent(websiteUrl)}`);
+            const result = await response.json();
+
+            displayResult(result);
+        } catch (error) {
+            console.error('Error:', error);
+            displayResult({ error: 'An error occurred during crawling.' });
+        }
+    }
+
+    function displayResult(result) {
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = '';
+
+        if (result.error) {
+            resultDiv.innerHTML = `<p style="color: red;">Error: ${result.error}</p>`;
+        } else {
+            resultDiv.innerHTML = '<h3>Crawling Result:</h3>';
+            for (const page of Object.entries(result)) {
+                resultDiv.innerHTML += `<p>${page}</p>`;
+            }
+        }
+    }
+</script>
+</body>
+</html>
