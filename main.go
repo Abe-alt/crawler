@@ -38,12 +38,12 @@ func crawlHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("Error executing crawl script: %s", err), http.StatusInternalServerError)
 		return
 	}
-
 	// Parse the output as JSON
 	var result map[string]interface{}
 	if err := json.Unmarshal(output, &result); err != nil {
-		fmt.Printf("Error decoding ////: %s\n", err) //////
-		fmt.Printf("Script Output:\n%s\n", output)   ////////
+		// tshoot output
+		//fmt.Printf("Error decoding ////: %s\n", err) //////
+		//fmt.Printf("Script Output:\n%s\n", output)   ////////
 		http.Error(w, fmt.Sprintf("Error decoding JSON: %s", err), http.StatusInternalServerError)
 		return
 	}
